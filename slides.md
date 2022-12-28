@@ -9,9 +9,8 @@ drawings:
 css: unocss
 title: Điều hướng
 ---
-
 <div>
-  <random-img :count="10" m="t-4" />
+  <random-img m="t-4" />
 </div>
 
 ---

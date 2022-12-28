@@ -4,12 +4,14 @@ specifiers:
   '@slidev/cli': ^0.38.2
   '@slidev/theme-default': '*'
   '@slidev/theme-seriph': '*'
+  dotenv: ^16.0.3
   googleapis: ^110.0.0
 
 dependencies:
   '@slidev/cli': 0.38.2_postcss@8.4.20
   '@slidev/theme-default': 0.21.2
   '@slidev/theme-seriph': 0.21.3
+  dotenv: 16.0.3
   googleapis: 110.0.0
 
 packages:
@@ -1916,7 +1918,6 @@ packages:
     resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
     engines: {node: '>=12'}
     dev: false
-    optional: true
 
   /drauu/0.3.2:
     resolution: {integrity: sha512-NnRQU6uM9uk1zAd33nFZ6FqZGGmT3jiYS/ERdDIDuTUgDsweSgpf1D3X7vYZwRSxCZayOnnt1sKWj9swbR8q4Q==}
