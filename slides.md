@@ -1,7 +1,6 @@
 ---
 class: text-center
 highlighter: shiki
-lineNumbers: false
 info: |
   ## random images by NTH
 drawings:
@@ -9,8 +8,6 @@ drawings:
 css: unocss
 title: Điều hướng
 ---
-<div>
-  <random-img m="t-4" />
+<div class="h-full w-full">
+  <random-img />
 </div>
-
----

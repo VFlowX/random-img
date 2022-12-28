@@ -5,36 +5,55 @@ import { onMounted, ref } from 'vue';
 
 onKeyStroke('ArrowRight', (e) => {
   e.preventDefault();
-  getFile()
+  randomImage()
 })
 
 let lstImageFile;
+let fileIndex;
 const url = `https://www.googleapis.com/drive/v3/files?key=AIzaSyAQfVhYG8IyZ4CQo9MFTg0O1548hd4LJH8&q="1LNWEoCuz1e021Gs4TT73DcEOz-RXYGne"+in+parents`
 const imgSrc = ref();
 const show = ref(false)
-const getFile = async () => {
-  show.value = false;
+const getListFile = async () => {
   if (!lstImageFile) {
     const { isFetching, error, data } = await useFetch(url).json()
     let res: any = data.value;
     lstImageFile = res?.files;
   }
-  if (lstImageFile?.length) {
-    let randomindex = randomIntFromInterval(0, lstImageFile.length)
-    imgSrc.value = `https://drive.google.com/uc?id=${lstImageFile[randomindex]?.id}`
+}
+const changeImage = async (index) => {
+  show.value = false;
+  if (lstImageFile[index]?.id) {
+    imgSrc.value = `https://drive.google.com/uc?id=${lstImageFile[index]?.id}`
   }
   setTimeout(() => {
     show.value = true;
   }, 0)
 }
 
-const randomIntFromInterval = (min, max) => { // min and max included 
-  return Math.floor(Math.random() * (max - min) + min)
+const randomImage = async () => {
+  await getListFile()
+  if (lstImageFile?.length) {
+    randomIndex(0, lstImageFile.length)
+    await changeImage(fileIndex)
+  }
+}
+
+const randomIndex = (min, max) => { // min and max included
+  let tmp = Math.floor(Math.random() * (max - min) + min);
+  if (tmp == fileIndex) {
+    fileIndex = randomIndex(min, max)
+  }
+  else {
+    fileIndex = tmp
+  }
 }
 
 onMounted(() => {
-  getFile()
+  randomImage()
 })
+
+const FIVE_MIN_MILLISEC = 5 * 60 * 1000;
+setInterval(randomImage, FIVE_MIN_MILLISEC)
 
 
 </script>
