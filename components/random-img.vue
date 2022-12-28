@@ -49,11 +49,11 @@ const randomIndex = (min, max) => { // min and max included
 }
 
 onMounted(() => {
-  randomImage()
+  randomImage();
+  const THIRTY_SEC_MILLISEC = 30 * 1000;
+  setInterval(randomImage, THIRTY_SEC_MILLISEC)
 })
 
-const FIVE_MIN_MILLISEC = 5 * 60 * 1000;
-setInterval(randomImage, FIVE_MIN_MILLISEC)
 
 
 </script>
