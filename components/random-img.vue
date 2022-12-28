@@ -59,8 +59,8 @@ setInterval(randomImage, FIVE_MIN_MILLISEC)
 </script>
 
 <template>
-  <div v-if="show">
-    <img :src="imgSrc" alt="loading...">
+  <div v-if="show" class="max-h-full max-w-full">
+    <img :src="imgSrc">
   </div>
   <div v-else>loading...</div>
 </template>

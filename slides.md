@@ -1,4 +1,5 @@
 ---
+theme: none
 class: text-center
 highlighter: shiki
 info: |
@@ -8,6 +9,6 @@ drawings:
 css: unocss
 title: Điều hướng
 ---
-<div class="h-full w-full">
+<div >
   <random-img />
 </div>
