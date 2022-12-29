@@ -47,7 +47,7 @@ const height = ref(window.innerHeight)
 
 <template>
   <n-layout class="h-full">
-    <n-carousel v-if="show" :autoplay="autoplay" :interval="100" @click="autoplay = !autoplay" :space-between="20"
+    <n-carousel v-if="show" :autoplay="autoplay" :interval="50" @click="autoplay = !autoplay" :space-between="20"
       effect="fade" :style="'height:' + height + 'px'" :show-dots="false">
       <n-carousel-item v-for="(item, index) in lstImageURL">
         <img class="carousel-img" :src="item.url">
