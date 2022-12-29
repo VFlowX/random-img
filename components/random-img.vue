@@ -1,66 +1,59 @@
 <script setup lang="ts">
 import { useFetch } from '@vueuse/core'
-import { onKeyStroke } from '@vueuse/core'
-import { onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue'
+import { NCarousel } from 'naive-ui'
 
-onKeyStroke('ArrowRight', (e) => {
-  e.preventDefault();
-  randomImage()
-})
+let lstImageURL;
+const show = ref();
+const autoplay = ref(true);
+const url = `https://www.googleapis.com/drive/v3/files?key=${atob("QUl6YVN5QVFmVmhZRzhJeVo0Q1FvOU1GVGcwTzE1NDhoZDRMSkg4")}&q="1LNWEoCuz1e021Gs4TT73DcEOz-RXYGne"+in+parents`
 
-let lstImageFile;
-let fileIndex;
-const url = `https://www.googleapis.com/drive/v3/files?key=AIzaSyAQfVhYG8IyZ4CQo9MFTg0O1548hd4LJH8&q="1LNWEoCuz1e021Gs4TT73DcEOz-RXYGne"+in+parents`
-const imgSrc = ref();
-const show = ref(false)
-const getListFile = async () => {
-  if (!lstImageFile) {
+const getListURL = async () => {
+  if (!lstImageURL) {
     const { isFetching, error, data } = await useFetch(url).json()
     let res: any = data.value;
-    lstImageFile = res?.files;
+    if (Array.isArray(res?.files)) {
+      shuffleArray(res.files)
+      lstImageURL = res.files.map(x => {
+        return {
+          url: `https://drive.google.com/uc?id=${x.id}`,
+        }
+      });
+    }
+    console.log(lstImageURL);
   }
 }
-const changeImage = async (index) => {
-  show.value = false;
-  if (lstImageFile[index]?.id) {
-    imgSrc.value = `https://drive.google.com/uc?id=${lstImageFile[index]?.id}`
+
+const shuffleArray = array => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
   }
+}
+
+onMounted(async () => {
+  console.warn('mounted');
+  show.value = false
+  await getListURL();
   setTimeout(() => {
-    show.value = true;
+    show.value = true
   }, 0)
-}
-
-const randomImage = async () => {
-  await getListFile()
-  if (lstImageFile?.length) {
-    randomIndex(0, lstImageFile.length)
-    await changeImage(fileIndex)
-  }
-}
-
-const randomIndex = (min, max) => { // min and max included
-  let tmp = Math.floor(Math.random() * (max - min) + min);
-  if (tmp == fileIndex) {
-    fileIndex = randomIndex(min, max)
-  }
-  else {
-    fileIndex = tmp
-  }
-}
-
-onMounted(() => {
-  randomImage();
-  const THIRTY_SEC_MILLISEC = 30 * 1000;
-  setInterval(randomImage, THIRTY_SEC_MILLISEC)
 })
-
-
 
 </script>
 
 <template>
-  <div v-if="show" class="max-h-full max-w-full">
-    <img :src="imgSrc">
-  </div>
-  <div v-else>loading...</div>
+  <n-carousel v-if="show" :autoplay="autoplay" :interval="2000" draggable @click="autoplay = !autoplay"
+    :space-between="20">
+    <img v-for="(item, index) in lstImageURL" class="carousel-img" :src="item.url">
+  </n-carousel>
 </template>
+
+<style>
+.carousel-img {
+  width: 100%;
+  object-fit: cover;
+}
+</style>
