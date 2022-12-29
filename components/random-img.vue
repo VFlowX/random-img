@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useFetch } from '@vueuse/core'
 import { onMounted, ref } from 'vue'
-import { NCarousel, NLayout } from 'naive-ui'
+import { NCarousel, NLayout, NCarouselItem } from 'naive-ui'
 
 let lstImageURL;
 const show = ref();
